@@ -31,11 +31,9 @@ void setup(void)
 }
 void loop(void)
 {	
-
 	char tt[9]; 
 	char rhh[9];  
 															//	连接WiFi
-
 	while (!WiFi.isConnected())
 	{
 		delay(500);
