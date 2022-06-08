@@ -30,8 +30,10 @@ void setup(void)
 	WiFi.begin(ssid, password);
 }
 void loop(void)
-{
-	 
+{	
+
+	char tt[9]; 
+	char rhh[9];  
 															//	连接WiFi
 
 	while (!WiFi.isConnected())
@@ -41,6 +43,16 @@ void loop(void)
 	}
 	mySHTC3.update();			//更新温度传感器数据
 	delay(200);					//延时后才能接收到的温度数据  ！！！！！！！！！！！！！
+
+	sprintf(rhh," T : %2.1f", mySHTC3.toDegC()); 			// 温度
+	sprintf(tt, " H : %2.1f", mySHTC3.toPercent());
+
+	u8g2.clearBuffer();					// 清除内部缓冲区
+	u8g2.setFont(u8g2_font_ncenB24_tr); // choose a suitable font  字体大小
+	u8g2.drawStr(0, 59, tt);			// write something to the internal memory
+	u8g2.drawStr(0, 29, rhh);			// write something to the internal memory
+	u8g2.sendBuffer();					// transfer internal memory to the displa
+
 	udp.begin(localUdpPort); //启用UDP监听以接收数据
 	udp.beginPacket(SendIP, 2000); 
 //	delay(200);
